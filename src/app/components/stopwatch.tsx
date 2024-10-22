@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import { useState, useEffect } from 'react';
 
 const Stopwatch = () => {
@@ -30,6 +30,16 @@ const Stopwatch = () => {
     setSavedTimes([...savedTimes, time]);
   };
 
+  const handleRestart = () => {
+    setTime(0);
+    setIsRunning(false);
+  };
+
+  const handleDelete = (index: number) => {
+    const updatedTimes = savedTimes.filter((_, i) => i !== index);
+    setSavedTimes(updatedTimes);
+  };
+
   const formatTime = (time: number) => {
     const getSeconds = `0${time % 60}`.slice(-2);
     const minutes = Math.floor(time / 60);
@@ -39,54 +49,57 @@ const Stopwatch = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+    <div>
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-fuchsia-500 to-orange-600">
+      <h1 className='text-2xl font-bold mb-4 '>Stopwatch</h1>
       {/* Stopwatch Display */}
-      <div className="text-5xl font-bold mb-6">
+      <div className='bg-gradient-to-r from-teal-400 to-yellow-200 p-10 rounded-lg border-4 border-teal-500'>
+      <div className="text-5xl font-bold mb-6 text-teal-800">
         {formatTime(time)}
       </div>
 
       {/* "No" placeholders */}
       <div className="flex space-x-4 text-3xl font-semibold">
-        <div className="px-4 py-2 bg-gray-300 rounded">No {Math.floor(time / 3600)}</div>
-        <div className="px-4 py-2 bg-gray-300 rounded">No {Math.floor((time % 3600) / 60)}</div>
-        <div className="px-4 py-2 bg-gray-300 rounded">No {time % 60}</div>
+        <div className=" text-teal-300 px-4 py-2 bg-gradient-to-r from-rose-500 to-rose-900 rounded-lg">Hours : {Math.floor(time / 3600)}</div>
+        <div className=" text-teal-300 px-4 py-2 bg-gradient-to-r from-rose-500 to-rose-900 rounded-lg">Minutes : {Math.floor((time % 3600) / 60)}</div>
+        <div className=" text-teal-300 px-4 py-2 bg-gradient-to-r from-rose-500 to-rose-900 rounded-lg">Seconds : {time % 60}</div>
       </div>
 
       {/* Buttons */}
       <div className="mt-8 flex space-x-4">
         <button
           onClick={handleStart}
-          className="bg-green-500 text-white px-6 py-2 rounded"
-        >
-          Start
-        </button>
+          className="bg-gradient-to-r from-lime-500 to-pink-600 text-yellow-200 px-6 py-2 rounded">Start</button>
         <button
           onClick={handleStop}
-          className="bg-red-500 text-white px-6 py-2 rounded"
-        >
-          Stop
-        </button>
+          className="bg-gradient-to-r from-lime-500 to-pink-600 text-yellow-200 px-6 py-2 rounded">Stop</button>
+        <button
+          onClick={handleRestart}
+          className="bg-gradient-to-r from-lime-500 to-pink-600 text-yellow-200 px-6 py-2 rounded">Restart</button>
         <button
           onClick={handleSave}
-          className="bg-blue-500 text-white px-6 py-2 rounded"
-        >
-          Save
-        </button>
+          className="bg-gradient-to-r from-lime-500 to-pink-600 text-yellow-200 px-6 py-2 rounded">Save</button>
       </div>
 
-      {/* Saved Times */}
+      {/* Saved Times with Delete Button */}
       <div className="mt-8 text-lg">
-        <h3>Saved:</h3>
+        <h1 className='text-2xl font-bold text-rose-800'>Saved:</h1>
         <ul>
           {savedTimes.map((savedTime, index) => (
-            <li key={index} className="flex space-x-2">
-              <span>Co {Math.floor(savedTime / 3600)}:</span>
-              <span>Co {Math.floor((savedTime % 3600) / 60)}:</span>
-              <span>Co {savedTime % 60}</span>
+            <li key={index} className="flex items-center space-x-2 font-bold text-rose-800">
+              <span>Hours : {Math.floor(savedTime / 3600)}</span>
+              <span>Minutes : {Math.floor((savedTime % 3600) / 60)}</span>
+              <span>Seconds : {savedTime % 60}</span>
+              {/* Add 4px space using 'ml-1' */}
+              <button
+                onClick={() => handleDelete(index)}
+                className="ml-1 bg-gradient-to-r from-lime-500 to-pink-600 text-yellow-200 px-3 py-1 rounded mb-2">Delete</button>
             </li>
           ))}
         </ul>
       </div>
+    </div>
+    </div>
     </div>
   );
 };
