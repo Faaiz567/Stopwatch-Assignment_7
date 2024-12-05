@@ -56,7 +56,7 @@ const Stopwatch = () => {
       <div className='bg-gradient-to-r from-teal-400 to-yellow-200 p-10 rounded-lg border-4 border-teal-500'>
       <div className="text-5xl font-bold mb-6 text-teal-800"
         style={{
-            filter: 'drop-shadow(0px 0px 4px #4fb9af)',
+            filter: 'drop-shadow(0px 0px 4px D4AA3A)',
           }}
         >
         {formatTime(time)}
